@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>علم الفلك والتنجيم</title>
+  <style>
+    body { font-family: sans-serif; background: #f4f4f4; text-align: center; padding: 20px; direction: rtl; }
+    .container { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 0 10px #ccc; }
+    input, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; border: 1px solid #ccc; }
+    button { background-color: #007BFF; color: white; font-size: 16px; }
+    .result { background: #e0ffe0; margin-top: 20px; padding: 15px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>برنامج علم الفلك والتنجيم</h2>
+    <input type="text" id="name" placeholder="الاسم">
+    <input type="date" id="birthdate" placeholder="تاريخ الميلاد">
+    <input type="time" id="birthtime" placeholder="وقت الميلاد">
+    <input type="text" id="city" placeholder="مدينة الميلاد">
+    <button onclick="calculate()">احسب طالعك</button>
+
+    <div id="result" class="result" style="display:none;">
+      <h3>نتائج التحليل:</h3>
+      <p><strong>الاسم:</strong> <span id="r_name"></span></p>
+      <p><strong>تاريخ الميلاد:</strong> <span id="r_date"></span></p>
+      <p><strong>المدينة:</strong> <span id="r_city"></span></p>
+      <p><strong>الطالع التقريبي:</strong> <span id="ascendant"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const name = document.getElementById("name").value;
+      const date = document.getElementById("birthdate").value;
+      const time = document.getElementById("birthtime").value;
+      const city = document.getElementById("city").value;
+      if (!name || !date || !time || !city) {
+        alert("يرجى تعبئة جميع الحقول.");
+        return;
+      }
+
+      const [hour, minute] = time.split(":").map(Number);
+      const totalMinutes = hour * 60 + minute;
+      const ascendants = [
+        "♈ الحمل", "♉ الثور", "♊ الجوزاء", "♋ السرطان",
+        "♌ الأسد", "♍ العذراء", "♎ الميزان", "♏ العقرب",
+        "♐ القوس", "♑ الجدي", "♒ الدلو", "♓ الحوت"
+      ];
+      const ascIndex = Math.floor(totalMinutes / 120) % 12;
+
+      document.getElementById("r_name").textContent = name;
+      document.getElementById("r_date").textContent = date + " " + time;
+      document.getElementById("r_city").textContent = city;
+      document.getElementById("ascendant").textContent = ascendants[ascIndex];
+      document.getElementById("result").style.display = "block";
+    }
+  </script>
+</body>
+</html>
